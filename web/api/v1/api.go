@@ -506,6 +506,9 @@ func (api *API) series(r *http.Request) apiFuncResult {
 	metrics := []labels.Labels{}
 	for set.Next() {
 		metrics = append(metrics, set.At().Labels())
+		if len(metrics) > 1000000 {
+			return apiFuncResult{nil, &apiError{errorExec, errors.New("Label processing length exceeded")}, warnings, nil}
+		}
 	}
 	if set.Err() != nil {
 		return apiFuncResult{nil, &apiError{errorExec, set.Err()}, warnings, nil}
