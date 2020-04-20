@@ -848,9 +848,11 @@ func (ev *evaluator) rangeEval(f func([]Value, *EvalNodeHelper) Vector, exprs ..
 		// Make the function call.
 		enh.ts = ts
 		result := f(args, enh)
-		if result.ContainsSameLabelset() {
-			ev.errorf("vector cannot contain metrics with the same labelset")
-		}
+		/*
+		 *if result.ContainsSameLabelset() {
+		 *    ev.errorf("vector cannot contain metrics with the same labelset")
+		 *}
+		 */
 		enh.out = result[:0] // Reuse result vector.
 
 		ev.currentSamples += len(result)
@@ -1058,9 +1060,11 @@ func (ev *evaluator) eval(expr Expr) Value {
 				}
 			}
 		}
-		if mat.ContainsSameLabelset() {
-			ev.errorf("vector cannot contain metrics with the same labelset")
-		}
+		/*
+		 *if mat.ContainsSameLabelset() {
+		 *    ev.errorf("vector cannot contain metrics with the same labelset")
+		 *}
+		 */
 
 		putPointSlice(points)
 		return mat
@@ -1077,9 +1081,11 @@ func (ev *evaluator) eval(expr Expr) Value {
 					mat[i].Points[j].V = -mat[i].Points[j].V
 				}
 			}
-			if mat.ContainsSameLabelset() {
-				ev.errorf("vector cannot contain metrics with the same labelset")
-			}
+			/*
+			 *if mat.ContainsSameLabelset() {
+			 *    ev.errorf("vector cannot contain metrics with the same labelset")
+			 *}
+			 */
 		}
 		return mat
 
